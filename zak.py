@@ -3,14 +3,19 @@ import uuid
 
 class ApiClient:
 
-    def __init__(self):
+    def __init__(self, app_version):
+        """
+        :param app_version: Contains the version and build number of the Bank Cler Zak
+                            app from the Google Play store as string in the following
+                            format: 3.54.0.12168
+        """
         self.__scheme = 'https://'
         self.__host = 'zak.prd.cler.ch'
         self.__headers = {
             'Accept-Language': 'de',
             'Accept-Encoding': 'identity',
             'ClientId': 'clerzakr7',
-            'User-Agent': 'Zak/3.51.0.11854 (Android 14)',
+            'User-Agent': 'Zak/' + app_version + ' (Android 14)',
             'X-Zak-Device-Id': str(uuid.uuid4()),
             'X-Same-Domain': 'forCsrfProtection',
             'Connection': 'close'

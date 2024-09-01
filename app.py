@@ -3,8 +3,8 @@ import zak
 import csv
 from collections.abc import MutableMapping
 
-def get_transactions(username, password):
-    client = zak.ApiClient()
+def get_transactions(username, password, app_version):
+    client = zak.ApiClient(app_version)
     client.login(username, password)
     transactions = client.transactions()
     client.logout()
@@ -50,7 +50,13 @@ if __name__ == '__main__':
         required=True,
         help='The password to log into Bank Cler Zak account'
     )
+    parser.add_argument(
+        '--app-version',
+        metavar='app_version',
+        required=True,
+        help='The app version to log into Bank Cler Zak account'
+    )
     args = parser.parse_args()
 
-    tx = get_transactions(args.username, args.password)
+    tx = get_transactions(args.username, args.password, args.app_version)
     write_transactions_to_csv(tx)
