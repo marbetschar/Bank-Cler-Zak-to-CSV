@@ -15,9 +15,20 @@ you need to register this export with them by requesting an additional security 
 
 https://www.cler.ch/de/info/zak/zak-onboarding/login-hilfe/aktivierungscode-bestellen
 
-### Export to CSV
+### Convert to CSV
 
-To export all your Bank Cler Zak transactions, run the following command on your machine:
+In case you already have a *.json file stored on your disk containing all transactions, you can convert it
+to CSV using the following command:
+
+```shell
+python app.py --transactions=<path-to-json-file>
+```
+
+### ~~Export to CSV~~
+
+**IMPORTANT: This no longer works because Zak implemented 2FA authentication and I don't have the time to implement the full enrollment process**
+
+~~To export all your Bank Cler Zak transactions, run the following command on your machine:~~
 
 ```shell
 # You can find the app_version from the Google Play store page from your Android device.
@@ -26,7 +37,7 @@ To export all your Bank Cler Zak transactions, run the following command on your
 python app.py --username=<zak-username> --password=<zak-password>
 ```
 
-This will create a `Zak.csv` file in the project root containing all your transactions from Zak.
+~~This will create a `Zak.csv` file in the project root containing all your transactions from Zak.~~
 
 ## Development
 
@@ -53,7 +64,7 @@ Use it to export the Zak app into a splitted *.apks file and store it your Andro
 
 ### Transfer APKS to Computer
 
-Then, connect your phone with ADB to your computer and coaspy the APKS file:
+Then, connect your phone with ADB to your computer and copy the APKS file:
 
 ```bash
 adb pull storage/emulated/0/Download/*.apks ~/Downloads/BankClerZak.apks

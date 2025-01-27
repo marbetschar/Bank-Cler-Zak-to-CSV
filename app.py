@@ -1,6 +1,7 @@
 import argparse
 import zak
 import csv
+import json
 from collections.abc import MutableMapping
 
 def get_transactions(username, password, app_version):
@@ -41,13 +42,13 @@ if __name__ == '__main__':
     parser.add_argument(
         '--username',
         metavar='username',
-        required=True,
+        required=False,
         help='The username to log into Bank Cler Zak account'
     )
     parser.add_argument(
         '--password',
         metavar='password',
-        required=True,
+        required=False,
         help='The password to log into Bank Cler Zak account'
     )
     parser.add_argument(
@@ -56,7 +57,18 @@ if __name__ == '__main__':
         required=False,
         help='The app version to log into Bank Cler Zak account. Fetched from API if not provided.'
     )
+    parser.add_argument(
+        '--transactions',
+        metavar='transactions',
+        required=False,
+        help='The path to a *.json file containing all transactions fetched from the API'
+    )
     args = parser.parse_args()
 
-    tx = get_transactions(args.username, args.password, args.app_version)
+    if args.transactions is not None:
+        with open(args.transactions) as f:
+            tx = json.load(f)
+    else:
+        tx = get_transactions(args.username, args.password, args.app_version)
+
     write_transactions_to_csv(tx)
