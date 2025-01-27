@@ -3,14 +3,20 @@ import uuid
 
 class ApiClient:
 
-    def __init__(self, app_version):
+    def __init__(self, app_version = None):
         """
         :param app_version: Contains the version and build number of the Bank Cler Zak
                             app from the Google Play store as string in the following
-                            format: 3.54.0.12168
+                            format: 3.54.0.12168. If not provided, tries to fetch it
+                            from API directly.
         """
         self.__scheme = 'https://'
         self.__host = 'zak.prd.cler.ch'
+        self.__cookies = None
+
+        if app_version is None:
+            app_version = self.__get_app_version()
+
         self.__headers = {
             'Accept-Language': 'de',
             'Accept-Encoding': 'identity',
@@ -20,7 +26,22 @@ class ApiClient:
             'X-Same-Domain': 'forCsrfProtection',
             'Connection': 'close'
         }
-        self.__cookies = None
+
+    def __get_app_version(self):
+        response = requests.get(self.__url('/cler-ws-0.0.1/webapi/public/configs'))
+
+        if not response.ok:
+            response.raise_for_status()
+
+        items = response.json()
+        app_version = None
+
+        for item in items:
+            if item['key'] == 'app.version.currentVersion.android':
+                app_version = item['value']
+                break
+
+        return app_version
 
     def __url(self, path):
         return self.__scheme + self.__host + path

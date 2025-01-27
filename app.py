@@ -53,8 +53,8 @@ if __name__ == '__main__':
     parser.add_argument(
         '--app-version',
         metavar='app_version',
-        required=True,
-        help='The app version to log into Bank Cler Zak account'
+        required=False,
+        help='The app version to log into Bank Cler Zak account. Fetched from API if not provided.'
     )
     args = parser.parse_args()
 
