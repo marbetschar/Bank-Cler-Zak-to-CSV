@@ -67,7 +67,7 @@ if __name__ == '__main__':
 
     if args.transactions is not None:
         with open(args.transactions) as f:
-            tx = json.load(f)
+            tx = json.load(f)["transactionsList"]
     else:
         tx = get_transactions(args.username, args.password, args.app_version)
 
